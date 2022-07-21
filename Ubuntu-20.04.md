@@ -13,7 +13,7 @@
 
    ```shell
    sudo apt update
-   sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
+   sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev maven libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
    ```
 
    Here is the checklist.
@@ -34,6 +34,7 @@
    - [ ] libtool
    - [ ] lz4-devel
    - [ ] make
+   - [ ] maven (required by the packaging process)
    - [ ] mpfr-devel
    - [ ] numactl
    - [ ] openssl-devel
@@ -63,7 +64,7 @@
    sudo apt install python3 python3-pip python3-venv
    ```
 
-   After installation, change to user *app* by executing `su app`. Then execute the following commands.
+5. After installation, change to user *app* by executing `su app`. Then execute the following commands.
 
    ```shell
    python3 -m venv .venv_eggroll
@@ -97,7 +98,7 @@
    pip3 install -r ~/.venv_eggroll/requirements.txt
    ```
 
-5. Install and start MySQL server by the following commands.
+6. Install and start MySQL server by the following commands.
 
    ```shell
    sudo apt install mysql-server
@@ -105,3 +106,43 @@
    ```
 
 ## Deployment
+
+1. Continue as the user *app*. Create a workspace directory and clone the project. The following commands can be a reference.
+
+   ```shell
+   mkdir ~/workspace
+   cd ~/workspace
+   git clone -b v2.x https://github.com/WeBankFinTech/Eggroll.git
+   ```
+
+   After cloning, do dependency packaging by the following commands.
+
+   ```shell
+   cd ~/workspace/Eggroll/jvm
+   mvn clean package -DskipTests
+   ```
+
+   After packaging, execute the following commands.
+
+   ```shell
+   cd ~/workspace/Eggroll
+   mkdir lib
+   cp -r jvm/core/target/eggroll-core-2.0.1.jar lib
+   cp -r jvm/core/target/lib/* lib
+   cp -r jvm/roll_pair/target/eggroll-roll-pair-2.0.1.jar lib
+   cp -r jvm/roll_pair/target/lib/* ./lib
+   cp -r jvm/roll_site/target/eggroll-roll-site-2.0.1.jar lib
+   cp -r jvm/roll_site/target/lib/* lib
+   cp jvm/core/main/resources/create-eggroll-meta-tables.sql conf
+   tar -czf eggroll.tar.gz lib bin conf data python deploy
+   ```
+
+   After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack. The following commands can be a reference.
+
+   ```shell
+   cd ~/workspace
+   mkdir Eggroll_deploy
+   mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy/
+   cd ~/workspace/Eggroll_deploy
+   tar -xzf eggroll.tar.gz
+   ```
