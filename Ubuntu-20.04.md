@@ -19,7 +19,7 @@
    Here is the checklist.
 
    - [ ] autoconf
-   - [ ] autoconfig
+   - [ ] autoconfig (**???** did not find this package)
    - [ ] automake
    - [ ] bzip2
    - [ ] bzip2-devel
@@ -58,10 +58,11 @@
    echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /home/app/.bashrc
    ```
 
-4. Install Python and virtualenv by the following commands.
+4. Install Python 3.6 and virtualenv by the following commands.
 
    ```shell
-   sudo apt install python3 python3-pip python3-venv
+   sudo add-apt-repository ppa:deadsnakes/ppa
+   sudo apt install libpython3.6 libpython3.6-dev libpython3.6-minimal libpython3.6-stdlib python3.6 python3.6-distutils python3-pip python3-virtualenv
    ```
 
 5. After installation, change to user *app* by executing `su app`. Then execute the following commands.
@@ -105,44 +106,121 @@
    sudo systemctl start mysql.service
    ```
 
-## Deployment
+## Deploy
 
-1. Continue as the user *app*. Create a workspace directory and clone the project. The following commands can be a reference.
+### Pack Eggroll
 
-   ```shell
-   mkdir ~/workspace
-   cd ~/workspace
-   git clone -b v2.x https://github.com/WeBankFinTech/Eggroll.git
+Continue as the user *app*. Create a workspace directory and clone the project. The following commands can be a reference.
+
+```shell
+mkdir ~/workspace
+cd ~/workspace
+git clone -b v2.x https://github.com/WeBankFinTech/Eggroll.git
+```
+
+After cloning, do dependency packaging by the following commands.
+
+```shell
+cd ~/workspace/Eggroll/jvm
+mvn clean package -DskipTests
+```
+
+After packaging, execute the following commands.
+
+```shell
+cd ~/workspace/Eggroll
+mkdir lib
+cp -r jvm/core/target/eggroll-core-2.0.1.jar lib
+cp -r jvm/core/target/lib/* lib
+cp -r jvm/roll_pair/target/eggroll-roll-pair-2.0.1.jar lib
+cp -r jvm/roll_pair/target/lib/* ./lib
+cp -r jvm/roll_site/target/eggroll-roll-site-2.0.1.jar lib
+cp -r jvm/roll_site/target/lib/* lib
+cp jvm/core/main/resources/create-eggroll-meta-tables.sql conf
+tar -czf eggroll.tar.gz lib bin conf data python deploy
+```
+
+After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack. The following commands can be a reference.
+
+```shell
+cd ~/workspace
+mkdir Eggroll_deploy
+mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy/
+cd ~/workspace/Eggroll_deploy
+tar -xzf eggroll.tar.gz
+```
+
+### Configure MySQL
+
+Configure MySQL if it's a fresh installation. To proceed, change back to the *admin user* on Ubuntu. Then enter MySQL monitor as root by `sudo mysql` and change the root user’s authentication method to one that uses a password by the following command. Then `exit` MySQL monitor.
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+SELECT User, Host, plugin FROM mysql.user;
+```
+
+After changing the authentication method, run the security script by the following command.
+
+```shell
+sudo mysql_secure_installation
+```
+
+Then enter MySQL monitor as root by `mysql -u root -p` and change the root user's authentication method by the following command. Then `exit` the MySQL monitor.
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
+```
+
+To create a dedicated MySQL user and grant privileges, first enter MySQL monitor by `sudo mysql` and execute the following commands. Then `exit` the MySQL monitor.
+
+```sql
+CREATE USER 'app'@'localhost' IDENTIFIED BY 'eggroll';
+GRANT CREATE, ALTER, DROP, INSERT, INDEX, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'app'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+### Edit Config Files
+
+Edit config files. Change to user *app*, then change the working directory to Eggroll's deploy directory.
+
+1. Edit `conf/eggroll.properties` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Below are some tips.
+
+      - Check MySQL port by the following command in MySQL monitor.
+
+      ```sql
+      `show global variables like 'port';`
+      ```
+
+   <!-- ??? what is the guest id -->
+
+2. Edit `conf/route_table.json` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6).
+
+3. Edit `conf/create-eggroll-meta-tables.sql` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Then execute the following commands in MySQL monitor.
+
+   ```sql
+   source /home/app/workspace/Eggroll_deploy/conf/create-eggroll-meta-tables.sql;
+   INSERT INTO server_node (host, port, node_type, status) values ('$cluster_ip', '$cluster_port', 'CLUSTER_MANAGER', 'HEALTHY');
+   INSERT INTO server_node (host, port, node_type, status) values ('$node_ip', '$node_port', 'NODE_MANAGER', 'HEALTHY');
+   SELECT * FROM server_node;
    ```
 
-   After cloning, do dependency packaging by the following commands.
+### Start Services
 
-   ```shell
-   cd ~/workspace/Eggroll/jvm
-   mvn clean package -DskipTests
-   ```
+Change the working directory to Eggroll's working directory. Then execute the following commands.
 
-   After packaging, execute the following commands.
+```shell
+bash bin/eggroll.sh all start
+bash bin/eggroll.sh all status
+```
 
-   ```shell
-   cd ~/workspace/Eggroll
-   mkdir lib
-   cp -r jvm/core/target/eggroll-core-2.0.1.jar lib
-   cp -r jvm/core/target/lib/* lib
-   cp -r jvm/roll_pair/target/eggroll-roll-pair-2.0.1.jar lib
-   cp -r jvm/roll_pair/target/lib/* ./lib
-   cp -r jvm/roll_site/target/eggroll-roll-site-2.0.1.jar lib
-   cp -r jvm/roll_site/target/lib/* lib
-   cp jvm/core/main/resources/create-eggroll-meta-tables.sql conf
-   tar -czf eggroll.tar.gz lib bin conf data python deploy
-   ```
+## Test
 
-   After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack. The following commands can be a reference.
+1. Init test environment, when first-time login the server, execute the following commands.
 
-   ```shell
-   cd ~/workspace
-   mkdir Eggroll_deploy
-   mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy/
-   cd ~/workspace/Eggroll_deploy
-   tar -xzf eggroll.tar.gz
+   ```bash
+   export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+   export PYTHONPATH=${EGGROLL_HOME}/python
+   source ~/.venv_eggroll/bin/activate
+   echo $EGGROLL_HOME
+   echo $PYTHONPATH
    ```
