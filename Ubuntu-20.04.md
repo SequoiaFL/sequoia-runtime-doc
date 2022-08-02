@@ -2,6 +2,8 @@
 
 ## Prerequisite
 
+Each node should have no less than **8GB** RAM.
+
 1. Create a new group *apps* and a new user *app* by the following commands.
 
    ```shell
@@ -52,7 +54,7 @@
    javac -version
    ```
 
-   After installation, export `JAVA_HOME` for the user *app* by the following command.
+   After installation, export `JAVA_HOME` for the user *app* by the following command (**you may want to check the real path on your own system**).
 
    ```shell
    echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /home/app/.bashrc
@@ -65,7 +67,7 @@
    sudo apt install libpython3.6 libpython3.6-dev libpython3.6-minimal libpython3.6-stdlib python3.6 python3.6-distutils python3-pip python3-virtualenv
    ```
 
-5. After installation, change to user *app* by executing `su app`. Then execute the following commands.
+5. After installation, change to user *app* by executing `su app`. Then execute the following commands to create and activate virtual environment (**you may want to change the name of your own venv**).
 
    ```shell
    python3 -m venv .venv_eggroll
@@ -92,7 +94,7 @@
    python-rocksdb==0.7.0
    ```
 
-   After writing the file. Execute the following commands.
+   After writing the file. Execute the following commands to install required packages.
 
    ```shell
    pip3 install wheel
@@ -110,7 +112,7 @@
 
 ### Pack Eggroll
 
-Continue as the user *app*. Create a workspace directory and clone the project. The following commands can be a reference.
+Continue as the user *app*. Create a workspace directory and clone the project (**you may want to use the real path of your workspace on your own system**). The following commands can be a reference.
 
 ```shell
 mkdir ~/workspace
@@ -140,7 +142,7 @@ cp jvm/core/main/resources/create-eggroll-meta-tables.sql conf
 tar -czf eggroll.tar.gz lib bin conf data python deploy
 ```
 
-After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack. The following commands can be a reference.
+After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack (**you may want to use the real path of your deploy directory on your own system**). The following commands can be a reference.
 
 ```shell
 cd ~/workspace
@@ -183,19 +185,21 @@ FLUSH PRIVILEGES;
 
 Edit config files. Change to user *app*, then change the working directory to Eggroll's deploy directory.
 
-1. Edit `conf/eggroll.properties` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Below are some tips.
+1. Edit `conf/eggroll.properties` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). **Below are some tips**.
 
-      - Check MySQL port by the following command in MySQL monitor.
+   - Check MySQL port by the following command in MySQL monitor.
 
-      ```sql
-      `show global variables like 'port';`
-      ```
+     ```sql
+     show global variables like 'port';
+     ```
 
-   <!-- ??? what is the guest id -->
+   - Better make the `eggroll.resourcemanager.clustermanager.port` and `eggroll.resourcemanager.nodemanager.port` different.
 
-2. Edit `conf/route_table.json` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6).
+2. Edit `conf/route_table.json` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). **Below are some tips**.
 
-3. Edit `conf/create-eggroll-meta-tables.sql` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Then execute the following commands in MySQL monitor.
+   - Make sure the `party id`, `port` and `ip` match the configs in `eggroll.properties`.
+
+3. Edit `conf/create-eggroll-meta-tables.sql` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Then execute the following commands in MySQL monitor (**you may want to use the real `ip` and `port` that match your config**).
 
    ```sql
    source /home/app/workspace/Eggroll_deploy/conf/create-eggroll-meta-tables.sql;
@@ -213,14 +217,81 @@ bash bin/eggroll.sh all start
 bash bin/eggroll.sh all status
 ```
 
+Use the following command to verify open ports.
+
+```shell
+ss -ltnp
+```
+
 ## Test
 
-1. Init test environment, when first-time login the server, execute the following commands.
+### Test Environment Init
 
-   ```bash
-   export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
-   export PYTHONPATH=${EGGROLL_HOME}/python
-   source ~/.venv_eggroll/bin/activate
-   echo $EGGROLL_HOME
-   echo $PYTHONPATH
+When first-time login to the server, execute the following commands.
+
+```shell
+export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+export PYTHONPATH=${EGGROLL_HOME}/python
+source ~/.venv_eggroll/bin/activate
+echo $EGGROLL_HOME
+echo $PYTHONPATH
+```
+
+### Test `roll_pair`
+
+It is recommended **not** to use the standalone test script because it seems to use the same port for both the cluster manager and the node manager, which is not recommended in our previous setup.
+
+```shell
+cd ${EGGROLL_HOME}/python/eggroll/roll_pair/test
+python -m unittest test_roll_pair.TestRollPairCluster
+```
+
+### Test `roll_site`
+
+#### Communication Test
+
+1. Guest Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_remote
+   ```
+
+2. Host Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_get
+   ```
+
+#### Multi-Partition Communication Test
+
+1. Guest Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_remote_rollpair_big
+   ```
+
+2. Host Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair_big
+   ```
+
+#### `roll_pair` Communication Test
+
+1. Guest Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_remote_rollpair
+   ```
+
+2. Host Test
+
+   ```shell
+   cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+   python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair
    ```
