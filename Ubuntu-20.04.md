@@ -11,40 +11,45 @@ Each node should have no less than **8GB** RAM.
    sudo adduser --ingroup apps app
    ```
 
+2. (**optional**) Install some commonly used packages.
+
+   ```shell
+   sudo apt install curl git htop neovim ssh zsh
+   ```
+
 2. Install required packages by the following commands.
 
    ```shell
-   sudo apt update
    sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev maven libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
    ```
 
    Here is the checklist.
 
-   - [ ] autoconf
+   - [x] autoconf
    - [ ] autoconfig (**???** did not find this package)
-   - [ ] automake
-   - [ ] bzip2
-   - [ ] bzip2-devel
-   - [ ] gcc
-   - [ ] gcc-c++
-   - [ ] gmp-devel
-   - [ ] libaio
-   - [ ] libasan
-   - [ ] libffi-dev
-   - [ ] libmpc-devel
-   - [ ] librocksdb-dev (required by [python-rocksdb](https://python-rocksdb.readthedocs.io/en/latest/installation.html#with-distro-package-and-pypi))
-   - [ ] libtool
-   - [ ] lz4-devel
-   - [ ] make
-   - [ ] maven (required by the packaging process)
-   - [ ] mpfr-devel
-   - [ ] numactl
-   - [ ] openssl-devel
-   - [ ] snappy
-   - [ ] snappy-devel
-   - [ ] supervisor
-   - [ ] zlib
-   - [ ] zlib-devel
+   - [x] automake
+   - [x] bzip2
+   - [x] bzip2-devel
+   - [x] gcc
+   - [x] gcc-c++
+   - [x] gmp-devel
+   - [x] libaio
+   - [x] libasan
+   - [x] libffi-dev
+   - [x] libmpc-devel
+   - [x] librocksdb-dev (required by [python-rocksdb](https://python-rocksdb.readthedocs.io/en/latest/installation.html#with-distro-package-and-pypi))
+   - [x] libtool
+   - [x] lz4-devel
+   - [x] make
+   - [x] maven (required by the packaging process)
+   - [x] mpfr-devel
+   - [x] numactl
+   - [x] openssl-devel
+   - [x] snappy
+   - [x] snappy-devel
+   - [x] supervisor
+   - [x] zlib
+   - [x] zlib-devel
 
 3. Install JDK 1.8 and verify by the following commands.
 
@@ -67,11 +72,12 @@ Each node should have no less than **8GB** RAM.
    sudo apt install libpython3.6 libpython3.6-dev libpython3.6-minimal libpython3.6-stdlib python3.6 python3.6-distutils python3-pip python3-virtualenv
    ```
 
-5. After installation, change to user *app* by executing `su app`. Then execute the following commands to create and activate virtual environment (**you may want to change the name of your own venv**).
+   After installation, change to user *app* by executing `su app`. Then execute the following commands to create and activate virtual environment (**you may want to change the name of your own venv**).
 
    ```shell
-   python3 -m venv .venv_eggroll
-   source .venv_eggroll/bin/activate
+   # python3.6 -m venv ~/.venv_eggroll
+   virtualenv --python python3.6 ~/.venv_eggroll
+   source ~/.venv_eggroll/bin/activate
    ```
 
    Create a file `requirements.txt` under `~/.venv_eggroll` by `nvim ~/.venv_eggroll/requirements.txt`. Then write the following content into `requirements.txt`. More info [here](https://github.com/WeBankFinTech/eggroll/blob/main/requirements.txt).
@@ -97,11 +103,10 @@ Each node should have no less than **8GB** RAM.
    After writing the file. Execute the following commands to install required packages.
 
    ```shell
-   pip3 install wheel
    pip3 install -r ~/.venv_eggroll/requirements.txt
    ```
 
-6. Install and start MySQL server by the following commands.
+5. Change back to the *admin user*, install and start MySQL server 8.0 by the following commands.
 
    ```shell
    sudo apt install mysql-server
@@ -110,9 +115,38 @@ Each node should have no less than **8GB** RAM.
 
 ## Deploy
 
+### Configure MySQL (Optional)
+
+Configure MySQL if it's a fresh installation. To proceed, change back to the *admin user*. Then enter MySQL monitor as root by `sudo mysql` and change the root user’s authentication method to one that uses a password by the following command. Then `exit` MySQL monitor.
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+SELECT User, Host, plugin FROM mysql.user;
+```
+
+After changing the authentication method, run the security script by the following command.
+
+```shell
+sudo mysql_secure_installation
+```
+
+Then enter MySQL monitor as root by `mysql -u root -p` and change the root user's authentication method by the following command. Then `exit` the MySQL monitor.
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
+```
+
+To create a dedicated MySQL user and grant privileges, first enter MySQL monitor by `sudo mysql` and execute the following commands. Then `exit` the MySQL monitor.
+
+```sql
+CREATE USER 'app'@'localhost' IDENTIFIED BY 'eggroll';
+GRANT CREATE, ALTER, DROP, INSERT, INDEX, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'app'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
 ### Pack Eggroll
 
-Continue as the user *app*. Create a workspace directory and clone the project (**you may want to use the real path of your workspace on your own system**). The following commands can be a reference.
+Change to user *app*. Create a workspace directory and clone the project (**you may want to use the real path of your workspace on your own system**). The following commands can be a reference.
 
 ```shell
 mkdir ~/workspace
@@ -150,35 +184,6 @@ mkdir Eggroll_deploy
 mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy/
 cd ~/workspace/Eggroll_deploy
 tar -xzf eggroll.tar.gz
-```
-
-### Configure MySQL
-
-Configure MySQL if it's a fresh installation. To proceed, change back to the *admin user* on Ubuntu. Then enter MySQL monitor as root by `sudo mysql` and change the root user’s authentication method to one that uses a password by the following command. Then `exit` MySQL monitor.
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-SELECT User, Host, plugin FROM mysql.user;
-```
-
-After changing the authentication method, run the security script by the following command.
-
-```shell
-sudo mysql_secure_installation
-```
-
-Then enter MySQL monitor as root by `mysql -u root -p` and change the root user's authentication method by the following command. Then `exit` the MySQL monitor.
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
-```
-
-To create a dedicated MySQL user and grant privileges, first enter MySQL monitor by `sudo mysql` and execute the following commands. Then `exit` the MySQL monitor.
-
-```sql
-CREATE USER 'app'@'localhost' IDENTIFIED BY 'eggroll';
-GRANT CREATE, ALTER, DROP, INSERT, INDEX, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'app'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
 ```
 
 ### Edit Config Files
@@ -264,7 +269,7 @@ python -m unittest test_roll_pair.TestRollPairCluster
    python -m unittest test_roll_site.TestRollSiteCluster.test_get
    ```
 
-#### Multi-Partition Communication Test
+##### Multi-Partition Communication Test
 
 1. Guest Test
 
@@ -280,7 +285,7 @@ python -m unittest test_roll_pair.TestRollPairCluster
    python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair_big
    ```
 
-#### `roll_pair` Communication Test
+##### `roll_pair` Communication Test
 
 1. Guest Test
 
@@ -295,3 +300,17 @@ python -m unittest test_roll_pair.TestRollPairCluster
    cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
    python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair
    ```
+
+### Sequoia Demo
+
+```shell
+export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+cd python/fate_script2/test
+python -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW
+```
+
+```python
+import sys
+sys.path.insert(0, "/home/app/workspace/Eggroll_deploy/python")
+sys.path.insert(1, "/home/app/workspace/sequoia-demo/python")
+```
