@@ -17,7 +17,7 @@ Each node should have no less than **8GB** RAM.
    sudo apt install curl git htop neovim ssh zsh
    ```
 
-2. Install required packages by the following commands.
+3. Install required packages by the following commands.
 
    ```shell
    sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev maven libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
@@ -51,7 +51,7 @@ Each node should have no less than **8GB** RAM.
    - [x] zlib
    - [x] zlib-devel
 
-3. Install JDK 1.8 and verify by the following commands.
+4. Install JDK 1.8 and verify by the following commands.
 
    ```shell
    sudo apt install openjdk-8-jdk
@@ -67,7 +67,7 @@ Each node should have no less than **8GB** RAM.
    echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /home/app/.bashrc
    ```
 
-4. Install Python 3.6 and virtualenv by the following commands.
+5. Install Python 3.6 and virtualenv by the following commands.
 
    ```shell
    sudo apt install libpython3.6 libpython3.6-dev libpython3.6-minimal libpython3.6-stdlib python3.6 python3.6-distutils python3-pip python3-virtualenv
@@ -107,7 +107,7 @@ Each node should have no less than **8GB** RAM.
    pip3 install -r ~/.venv_eggroll/requirements.txt
    ```
 
-5. Change back to the *admin user*, install and start MySQL server 8.0 by the following commands. More info [here](https://www.digitalocean.com/community/tutorials/how-to-install-the-latest-mysql-on-ubuntu-18-04).
+6. Change back to the *admin user*, install and start MySQL server 8.0 by the following commands. More info [here](https://www.digitalocean.com/community/tutorials/how-to-install-the-latest-mysql-on-ubuntu-18-04).
 
    ```shell
    mkdir ~/tmp
