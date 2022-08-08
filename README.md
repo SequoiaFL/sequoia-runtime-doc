@@ -2,7 +2,7 @@
 
 ## Eggroll Deployment
 
-This part introduces how to deploy [Eggroll](https://github.com/WeBankFinTech/eggroll). Select the corresponding environment in the following (please read the whole corresponding doc before building).
+This part introduces how to deploy [Eggroll](https://github.com/WeBankFinTech/eggroll). Select the corresponding environment in the following (please read the whole corresponding doc before deploying).
 
 ### Eggroll 2.0.1
 
