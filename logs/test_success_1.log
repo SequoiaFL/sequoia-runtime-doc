@@ -1,0 +1,138 @@
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ export PYTHONPATH=${EGGROLL_HOME}/python
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ cd ${EGGROLL_HOME}/python/eggroll/roll_pair/test
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_pair/test$ python -m unittest test_roll_pair.TestRollPairCluster
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185558.695_192.168.222.129
+10
+aggregate result:  25
+....[(4, [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)])]
+..before delete:[('k1', 'v1'), ('k2', 'v2'), ('k3', 'v3'), ('k4', 'v4')]
+after delete:[('k2', 'v2'), ('k3', 'v3'), ('k4', 'v4')]
+.before destroy:[]
+...[(1, 1), (3, 3)]
+.0
+(0, 0)
+.[(83741, 83741), (83742, 83742), (56627, 56627), (56628, 56628), (56629, 56629), (56630, 56630), (21091, 21091), (60274, 60274), (60275, 60275), (60276, 60276)]
+..[(4, [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)])]
+.[('a', 3), ('d', 7)]
+.left:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)], right:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)]
+111 [('a', 3), ('d', 7), ('f', 3), ('g', 13)]
+222 [('a', 3), ('d', 7), ('f', 3), ('g', 13)]
+left:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)], right:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+333 [('a', 3), ('d', 7), ('f', 3), ('g', 13)]
+.[('a', 2), ('b', 8)]
+...[(0, '0map_values'), (1, '1map_values'), (2, '2map_values'), (3, '3map_values'), (4, '4map_values'), (5, '5map_values'), (6, '6map_values'), (7, '7map_values'), (8, '8map_values'), (9, '9map_values')]
+.<RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=IN_MEMORY, namespace=er_session_py_20220726.185558.695_192.168.222.129, name=950ac882-0cd1-11ed-af94-39e450a01c40, path=, total_partitions=10, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f8498cdcb70>, partitions=[***, len=10], options=[{'eggroll.session.processors.per.node': '10', 'store_type': 'IN_MEMORY', 'eggroll.session.id': 'er_session_py_20220726.185558.695_192.168.222.129'}]) at 0x7f8498ce0860>) at 0x7f8498cdca90>
+[(9, '9'), (0, '0'), (1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'), (6, '6'), (7, '7'), (8, '8')]
+....length: 2038
+/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/test_roll_pair.py:90: DeprecationWarning: Please use assertEqual instead.
+  self.assertEquals(v, v1)
+.all:  [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6)]
+count:  6
+reduce result: 21
+.[[ 0  0  0  0  0  0  0  0  0  0 15]]
+.....[(b'a', b'b')]
+1
+.[(5, 5), (6, 6), (7, 7), (8, 8), (9, 9)]
+.left:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)], right:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)]
+111 [('b', 4), ('e', 0), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+222 [('c', 4)]
+left:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)], right:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+333 [('c', 4)]
+.[0, 1, 2]
+[(0, 0), (1, 1), (2, 2)]
+.<RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=ns1202010, name=testUnionLeft2020, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f8498ca4198>, partitions=[***, len=1], options=[{'eggroll.session.id': 'er_session_py_20220726.185558.695_192.168.222.129', 'eggroll.session.processors.per.node': '10'}]) at 0x7f8498ca43c8>) at 0x7f8498ca49b0>
+<RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=ns12020101, name=testUnionRight2020, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f8498ca4b70>, partitions=[***, len=1], options=[{'eggroll.session.processors.per.node': '10', 'eggroll.session.id': 'er_session_py_20220726.185558.695_192.168.222.129'}]) at 0x7f8498ca4d68>) at 0x7f8498ca4be0>
+[(0, 1), (1, 3), (2, 5), (3, 3)]
+left: <RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=namespace20200110, name=testUnionLeft2020, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f8498ca4518>, partitions=[***, len=1], options=[{'eggroll.session.processors.per.node': '10', 'eggroll.session.id': 'er_session_py_20220726.185558.695_192.168.222.129'}]) at 0x7f8498c976a0>) at 0x7f8498ca1748>
+right: <RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=namespace20200110, name=testUnionRight2020, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f8498ca17f0>, partitions=[***, len=1], options=[{'eggroll.session.id': 'er_session_py_20220726.185558.695_192.168.222.129', 'eggroll.session.processors.per.node': '10'}]) at 0x7f8498ca1978>) at 0x7f849e768160>
+left: [(0, 1), (1, 2), (2, 3)]
+right: [(1, 1), (2, 2), (3, 3)]
+[(0, 1), (1, 3), (2, 5), (3, 3)]
+.left:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)], right:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)]
+111 [('a', 3), ('b', 4), ('c', 4), ('d', 7), ('e', 0), ('f', 3), ('g', 13), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+222 [('a', 3), ('b', 4), ('c', 4), ('d', 7), ('e', 0), ('f', 3), ('g', 13), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+left:[('a', 2), ('c', 4), ('d', 1), ('f', 0), ('g', 1)], right:[('a', 1), ('b', 4), ('d', 6), ('e', 0), ('f', 3), ('g', 12), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+333 [('a', 3), ('b', 4), ('c', 4), ('d', 7), ('e', 0), ('f', 3), ('g', 13), ('h', 13), ('i', 14), ('j', 15), ('k', 16), ('l', 17)]
+.
+----------------------------------------------------------------------
+Ran 38 tests in 41.006s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_pair/test$ cd ${EGGROLL_HOME}/python/eggroll/roll_site/test
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_remote
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185828.684_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185832.882_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+result: __federation__#atest#RsaIntersectTransferVariable.rsa_pubkey#testing_rs_obj#guest#10002#host#10001
+.
+----------------------------------------------------------------------
+Ran 1 test in 11.730s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_get
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185854.884_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185858.435_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+obj: This is the remote object in a str
+.
+----------------------------------------------------------------------
+Ran 1 test in 8.888s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_remote_rollpair_big
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185912.804_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185916.382_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+count: 100000
+result:  __federation__#atest#roll_pair_name.table.big#roll_pair_tag.big#guest#10002#host#10001
+.
+----------------------------------------------------------------------
+Ran 1 test in 11.868s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair_big
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185927.311_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185930.559_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+obj: <RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=atest, name=__federation__#atest#roll_pair_name.table.big#roll_pair_tag.big#guest#10002#host#10001, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f1e575c0f98>, partitions=[***, len=1], options=[{'eggroll.session.id': 'er_session_py_20220726.185930.559_192.168.222.129', 'eggroll.static.conf.path': '/home/app/workspace/Eggroll_deploy/conf/eggroll.properties', 'eggroll.session.processors.per.node': '3'}]) at 0x7f1e575c0eb8>) at 0x7f1e575c0f28> , value: value-1 , count: 100000
+.
+----------------------------------------------------------------------
+Ran 1 test in 8.501s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_remote_rollpair
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185940.011_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185943.681_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+result:  __federation__#atest#roll_pair_name.table#roll_pair_tag#guest#10002#host#10001
+.
+----------------------------------------------------------------------
+Ran 1 test in 10.005s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_get_rollpair
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185953.360_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+er_session_py_20220726.185956.715_192.168.222.129
+conf file: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+obj: <RollPair(_store=<ErStore(store_locator=<ErStoreLocator(id=0, store_type=LMDB, namespace=atest, name=__federation__#atest#roll_pair_name.table#roll_pair_tag#guest#10002#host#10001, path=, total_partitions=1, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7f9cc4404f98>, partitions=[***, len=1], options=[{'eggroll.session.id': 'er_session_py_20220726.185956.715_192.168.222.129', 'eggroll.static.conf.path': '/home/app/workspace/Eggroll_deploy/conf/eggroll.properties', 'eggroll.session.processors.per.node': '3'}]) at 0x7f9cc4404eb8>) at 0x7f9cc4404f28> , value: v1
+.
+----------------------------------------------------------------------
+Ran 1 test in 8.491s
+
+OK
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$

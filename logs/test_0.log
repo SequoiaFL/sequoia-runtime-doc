@@ -1,0 +1,23 @@
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_pair/test$ python -m unittest test_roll_pair.TestRollPairStandalone
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+E
+======================================================================
+ERROR: setUpClass (test_roll_pair.TestRollPairStandalone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 527, in setUpClass
+    cls.ctx = get_standalone_context()
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/roll_pair_test_assets.py", line 72, in get_standalone_context
+    session = ErSession(options=options)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/session.py", line 113, in __init__
+    self.__session_meta = self._cluster_manager_client.get_or_create_session(session_meta)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/client.py", line 176, in get_or_create_session
+    serdes_type=self.__serdes_type))
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/client.py", line 230, in __check_processors
+    raise ValueError(f"processor in session meta is not valid: {session_meta}")
+ValueError: processor in session meta is not valid: <ErSessionMeta(id=er_session_py_20220722.204252.358_192.168.222.129, name=, status=NEW, tag=, processors=[***, len=17], options=[{'eggroll.session.deploy.mode': 'standalone'}]) at 0x7f46fd635cf8>
+
+----------------------------------------------------------------------
+Ran 0 tests in 361.244s
+
+FAILED (errors=1)

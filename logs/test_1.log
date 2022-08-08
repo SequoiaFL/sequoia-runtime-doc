@@ -1,0 +1,25 @@
+(.venv_eggroll) app@ubuntu:~/workspace/Eggroll_deploy/python/eggroll/roll_site/test$ python -m unittest test_roll_site.TestRollSiteCluster.test_remote
+static conf path: /home/app/workspace/Eggroll_deploy/conf/eggroll.properties
+E
+======================================================================
+ERROR: setUpClass (test_roll_site.TestRollSiteCluster)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_site/test/test_roll_site.py", line 282, in setUpClass
+    cls.rs_context_guest = get_cluster_context(role='guest', options=opts, props_file=props_file_guest, party_id=10002)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_site/test/roll_site_test_asset.py", line 125, in get_cluster_context
+    rp_context = rpta.get_cluster_context(options=options)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/roll_pair_test_assets.py", line 86, in get_cluster_context
+    session = ErSession(session_id=session_id, options=options)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/session.py", line 113, in __init__
+    self.__session_meta = self._cluster_manager_client.get_or_create_session(session_meta)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/client.py", line 176, in get_or_create_session
+    serdes_type=self.__serdes_type))
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/client.py", line 230, in __check_processors
+    raise ValueError(f"processor in session meta is not valid: {session_meta}")
+ValueError: processor in session meta is not valid: <ErSessionMeta(id=er_session_py_20220722.205538.809_192.168.222.129, name=, status=NEW, tag=, processors=[***, len=4], options=[{'eggroll.session.processors.per.node': '3', 'eggroll.static.conf.path': '/home/app/workspace/Eggroll_deploy/conf/eggroll.properties'}]) at 0x7fa8913644e0>
+
+----------------------------------------------------------------------
+Ran 0 tests in 360.375s
+
+FAILED (errors=1)
