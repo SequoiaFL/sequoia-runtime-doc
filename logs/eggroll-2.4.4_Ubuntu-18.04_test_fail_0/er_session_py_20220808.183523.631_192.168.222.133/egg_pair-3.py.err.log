@@ -1,0 +1,36 @@
+[ERROR][2022-08-08 18:35:54,442][eggpair-command-server_1,pid:13829,tid:140483951064832][command_router.py:93.dispatch] - Failed to dispatch to [v1/egg-pair/runTask], task_name: withStores, request: [<ErTask(id=er_session_py_20220808.183523.631_192.168.222.133-py-job-20220808.183554.427043_withStores-task-2, name=withStores, inputs=[<ErPartition(id=2, store_locator=<ErStoreLocator(id=0, store_type=ROLL_PAIR_CACHE, namespace=er_session_meta, name=er_session_py_20220808.183523.631_192.168.222.133, path=, total_partitions=3, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7fc52d431940>, processor=<ErProcessor(id=3, server_node_id=2, name=, processor_type=egg_pair, status=RUNNING, command_endpoint=<ErEndpoint(host=192.168.222.133, port=40483) at 0x7fc52d431b38>, transfer_endpoint=<ErEndpoint(host=192.168.222.133, port=36641) at 0x7fc52d4319e8>, pid=13829, options=[{}], tag=) at 0x7fc52d431d30>, rank_in_node=2) at 0x7fc52d431898>], outputs=[], job=<ErJob(id=er_session_py_20220808.183523.631_192.168.222.133-py-job-20220808.183554.427043_withStores, name=withStores, inputs=[<ErStore(store_locator=<ErStoreLocator(id=0, store_type=ROLL_PAIR_CACHE, namespace=er_session_meta, name=er_session_py_20220808.183523.631_192.168.222.133, path=, total_partitions=3, partitioner=BYTESTRING_HASH, serdes=PICKLE) at 0x7fc52d431b00>, partitions=[***, len=3], options=[{'store_type': 'ROLL_PAIR_CACHE', 'create_if_missing': 'True', 'eggroll.session.id': 'er_session_py_20220808.183523.631_192.168.222.133', 'eggroll.session.processors.per.node': '3', 'total_partitions': '3'}]) at 0x7fc52d431cf8>], outputs=[], functors=[1], options={}) at 0x7fc52d431ef0>) at 0x7fc52d431860>]
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch
+    call_result = _method(_instance, *deserialized_args)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/utils.py", line 194, in wrapper
+    raise RuntimeError(msg)
+RuntimeError: 
+
+==== detail start, at 20220808.183554.440 ====
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace/Eggroll_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
