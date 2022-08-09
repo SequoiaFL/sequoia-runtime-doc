@@ -1,0 +1,187 @@
+[INFO ][2022-08-09 17:29:44,316][MainThread,pid:10579,tid:140242847508288][session.py:74.__init__] - static conf path: /home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/conf/eggroll.properties
+[INFO ][2022-08-09 17:29:51,334][MainThread,pid:10579,tid:140242847508288][session.py:212.__init__] - session init finished: er_session_py_20220809.172944.316_192.168.222.129, details: <ErSessionMeta(id=er_session_py_20220809.172944.316_192.168.222.129, name=, status=ACTIVE, tag=, processors=[***, len=3], options=[{'eggroll.session.processors.per.node': '3'}]) at 0x7f8cafdee518>
+[INFO ][2022-08-09 17:29:51,335][MainThread,pid:10579,tid:140242847508288][gc_utils.py:26.__init__] - global GC enabled. starting GC thread
+[INFO ][2022-08-09 17:29:51,911][MainThread,pid:10579,tid:140242847508288][transfer_pair.py:113.__init__] - transfer pair _executor_pool max_workers=5000
+[ERROR][2022-08-09 17:30:43,893][command_client_1,pid:10579,tid:140242057148160][client.py:96.sync_send] - Error calling to 192.168.222.129:35197, command_uri: CommandURI(_uri=v1/egg-pair/runTask), req:ErCommandRequest(id=20220809.173043.868527, uri=v1/egg-pair/runTask, args=[[b'\naer_session_py_20220809.172944.316_192.168.222.129-py-job-20220809.173043.865498_withStores-task-0\x12\nwithStores\x1a\xbd\x01\x12p\x12\x0fROLL_PAIR_CACHE\x1a\x0fer_session_meta"1er_session_py_20220809.172944.316_192.168.222.1290\x03:\x0fBYTESTRING_HASHB\x06PICKLE\x1aI\x08\x98\x03\x10\x02"\x08egg_pair*\x07RUNNING2\x15\n\x0f192.168.222.129\x10\xfd\x92\x02:\x15\n\x0f192.168.222.129\x10\xd9\x93\x02'], len=1], kwargs=[***, len=0])
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/client.py", line 84, in sync_send
+    response = _command_stub.call(request.to_proto())
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: 
+
+==== detail start, at 20220809.173043.886 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call
+    kwargs=getattr(command_request, '_kwargs'))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch
+    raise e
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch
+    call_result = _method(_instance, *deserialized_args)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper
+    raise RuntimeError(msg)
+RuntimeError: 
+
+==== detail start, at 20220809.173043.879 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
+
+==== detail end ====
+
+"
+	debug_error_string = "{"created":"@1660037443.892092490","description":"Error received from peer ipv4:192.168.222.129:35197","file":"src/core/lib/surface/call.cc","file_line":1055,"grpc_message":"Exception calling application: \n\n==== detail start, at 20220809.173043.886 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call\n    kwargs=getattr(command_request, '_kwargs'))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch\n    raise e\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch\n    call_result = _method(_instance, *deserialized_args)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper\n    raise RuntimeError(msg)\nRuntimeError: \n\n==== detail start, at 20220809.173043.879 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\n==== detail end ====\n\n\n\n==== detail end ====\n\n","grpc_status":2}"
+>
+[ERROR][2022-08-09 17:30:43,897][command_client_2,pid:10579,tid:140242073933568][client.py:96.sync_send] - Error calling to 192.168.222.129:42847, command_uri: CommandURI(_uri=v1/egg-pair/runTask), req:ErCommandRequest(id=20220809.173043.871703, uri=v1/egg-pair/runTask, args=[[b'\naer_session_py_20220809.172944.316_192.168.222.129-py-job-20220809.173043.865498_withStores-task-1\x12\nwithStores\x1a\xc1\x01\x08\x01\x12p\x12\x0fROLL_PAIR_CACHE\x1a\x0fer_session_meta"1er_session_py_20220809.172944.316_192.168.222.1290\x03:\x0fBYTESTRING_HASHB\x06PICKLE\x1aI\x08\x99\x03\x10\x02"\x08egg_pair*\x07RUNNING2\x15\n\x0f192.168.222.129\x10\xdf\xce\x02:\x15\n\x0f192.168.222.129\x10\x8b'], len=1], kwargs=[***, len=0])
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/client.py", line 84, in sync_send
+    response = _command_stub.call(request.to_proto())
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: 
+
+==== detail start, at 20220809.173043.889 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call
+    kwargs=getattr(command_request, '_kwargs'))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch
+    raise e
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch
+    call_result = _method(_instance, *deserialized_args)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper
+    raise RuntimeError(msg)
+RuntimeError: 
+
+==== detail start, at 20220809.173043.884 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
+
+==== detail end ====
+
+"
+	debug_error_string = "{"created":"@1660037443.892424711","description":"Error received from peer ipv4:192.168.222.129:42847","file":"src/core/lib/surface/call.cc","file_line":1055,"grpc_message":"Exception calling application: \n\n==== detail start, at 20220809.173043.889 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call\n    kwargs=getattr(command_request, '_kwargs'))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch\n    raise e\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch\n    call_result = _method(_instance, *deserialized_args)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper\n    raise RuntimeError(msg)\nRuntimeError: \n\n==== detail start, at 20220809.173043.884 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\n==== detail end ====\n\n\n\n==== detail end ====\n\n","grpc_status":2}"
+>
+[ERROR][2022-08-09 17:30:43,900][command_client_3,pid:10579,tid:140242082326272][client.py:96.sync_send] - Error calling to 192.168.222.129:40191, command_uri: CommandURI(_uri=v1/egg-pair/runTask), req:ErCommandRequest(id=20220809.173043.875570, uri=v1/egg-pair/runTask, args=[[b'\naer_session_py_20220809.172944.316_192.168.222.129-py-job-20220809.173043.865498_withStores-task-2\x12\nwithStores\x1a\xc1\x01\x08\x02\x12p\x12\x0fROLL_PAIR_CACHE\x1a\x0fer_session_meta"1er_session_py_20220809.172944.316_192.168.222.1290\x03:\x0fBYTESTRING_HASHB\x06PICKLE\x1aI\x08\x9a\x03\x10\x02"\x08egg_pair*\x07RUNNING2\x15\n\x0f192.168.222.129\x10\xff\xb9\x02:\x15\n\x0f192.168.222.129\x10\xfb'], len=1], kwargs=[***, len=0])
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/client.py", line 84, in sync_send
+    response = _command_stub.call(request.to_proto())
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: 
+
+==== detail start, at 20220809.173043.899 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call
+    kwargs=getattr(command_request, '_kwargs'))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch
+    raise e
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch
+    call_result = _method(_instance, *deserialized_args)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper
+    raise RuntimeError(msg)
+RuntimeError: 
+
+==== detail start, at 20220809.173043.894 ====
+Traceback (most recent call last):
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
+
+==== detail end ====
+
+"
+	debug_error_string = "{"created":"@1660037443.900363096","description":"Error received from peer ipv4:192.168.222.129:40191","file":"src/core/lib/surface/call.cc","file_line":1055,"grpc_message":"Exception calling application: \n\n==== detail start, at 20220809.173043.899 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_service.py", line 33, in call\n    kwargs=getattr(command_request, '_kwargs'))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 94, in dispatch\n    raise e\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/command/command_router.py", line 91, in dispatch\n    call_result = _method(_instance, *deserialized_args)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 194, in wrapper\n    raise RuntimeError(msg)\nRuntimeError: \n\n==== detail start, at 20220809.173043.894 ====\nTraceback (most recent call last):\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/utils.py", line 187, in wrapper\n    return func(*args, **kw)\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task\n    value=self.functor_serdes.serialize(f(task)))\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs\n    eggs = input_adapter.get('eggs')\n  File "/home/app/workspace_eggroll-2.4.4/Eggroll-2.4.4_deploy/python/eggroll/core/pair_store/adapter.py", line 190, in get\n    return self.data[key]\nKeyError: 'eggs'\n\n==== detail end ====\n\n\n\n==== detail end ====\n\n","grpc_status":2}"
+>
+[INFO ][2022-08-09 17:31:15,633][MainThread,pid:10579,tid:140242847508288][session.py:374.stop] - stopping session (gracefully): er_session_py_20220809.172944.316_192.168.222.129
+[INFO ][2022-08-09 17:31:15,635][MainThread,pid:10579,tid:140242847508288][gc_utils.py:32.stop] - GC: gc_util.stop called
+[INFO ][2022-08-09 17:31:15,686][Thread-1,pid:10579,tid:140242214295296][gc_utils.py:52.run] - GC should_stop=True, stopping GC thread
