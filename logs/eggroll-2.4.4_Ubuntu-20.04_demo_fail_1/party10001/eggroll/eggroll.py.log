@@ -1,0 +1,16 @@
+[INFO ][2022-08-10 14:09:00,930][MainThread,pid:27846,tid:139752203679552][session.py:74.__init__] - static conf path: /home/app/workspace/eggroll-0_deploy/conf/eggroll.properties
+[INFO ][2022-08-10 14:09:01,507][MainThread,pid:27846,tid:139752203679552][session.py:212.__init__] - session init finished: test_fs_id_1660111740.9304543_guest_10002, details: <ErSessionMeta(id=test_fs_id_1660111740.9304543_guest_10002, name=, status=ACTIVE, tag=, processors=[***, len=1], options=[{'eggroll.transfer.service.host': '127.0.0.1', 'eggroll.resourcemanager.clustermanager.port': '4671', 'eggroll.resourcemanager.nodemanager.port': '4671', 'eggroll.transfer.service.port': '20004'}]) at 0x7f1a72ee6c50>
+[INFO ][2022-08-10 14:09:01,507][MainThread,pid:27846,tid:139752203679552][gc_utils.py:26.__init__] - global GC enabled. starting GC thread
+[ERROR][2022-08-10 14:09:01,625][command_client_1,pid:27846,tid:139751555090176][client.py:96.sync_send] - Error calling to 127.0.0.1:20003, command_uri: CommandURI(_uri=v1/egg-pair/runTask), req:ErCommandRequest(id=20220810.140901.624479, uri=v1/egg-pair/runTask, args=[[b'\nYtest_fs_id_1660111740.9304543_guest_10002-py-job-20220810.140901.623597_withStores-task-0\x12\nwithStores\x1a\xb0\x01\x12h\x12\x0fROLL_PAIR_CACHE\x1a\x0fer_session_meta")test_fs_id_1660111740.9304543_guest_100020\x01:\x0fBYTESTRING_HASHB\x06PICKLE\x1aD\x08\x04\x10\x02"\x08egg_pair*\x07RUNNING2\x0f\n\t127.0.0.1\x10\xa3\x9c\x01:\x0f\n\t127.0.0.1\x10\xa4\x9c\x01H\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01*\xc8\r\nRtest_fs_id_16'], len=1], kwargs=[***, len=0])
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll/python/eggroll/core/client.py", line 84, in sync_send
+    response = _command_stub.call(request.to_proto())
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 604, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/home/app/.venv_eggroll/lib/python3.6/site-packages/grpc/_channel.py", line 506, in _end_unary_response_blocking
+    raise _Rendezvous(state, None, None, deadline)
+grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses"
+	debug_error_string = "{"created":"@1660111741.625138959","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3876,"referenced_errors":[{"created":"@1660111741.625134608","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":395,"grpc_status":14}]}"
+>
