@@ -1,0 +1,71 @@
+/home/app/workspace/Eggroll_deploy_0/data
+k:a, v:1
+k:c, v:10
+k:d, v:4
+k:j, v:66
+lambda ret:[('A_0', 1), ('A_1', 2), ('A_0', 10), ('A_1', 11), ('B_0', 4), ('B_1', 5), ('j_0', 66), ('j_1', 67)]
+
+
+==== detail start, at 20220810.125240.479 ====
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
+
+
+==== detail start, at 20220810.125240.480 ====
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/command/command_service.py", line 33, in call
+    kwargs=getattr(command_request, '_kwargs'))
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/command/command_router.py", line 94, in dispatch
+    raise e
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/command/command_router.py", line 91, in dispatch
+    call_result = _method(_instance, *deserialized_args)
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/utils.py", line 194, in wrapper
+    raise RuntimeError(msg)
+RuntimeError: 
+
+==== detail start, at 20220810.125240.479 ====
+Traceback (most recent call last):
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/utils.py", line 187, in wrapper
+    return func(*args, **kw)
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/egg_pair.py", line 690, in run_task
+    value=self.functor_serdes.serialize(f(task)))
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/roll_pair/test/test_roll_pair.py", line 80, in get_eggs
+    eggs = input_adapter.get('eggs')
+  File "/home/app/workspace/Eggroll_deploy_0/python/eggroll/core/pair_store/adapter.py", line 190, in get
+    return self.data[key]
+KeyError: 'eggs'
+
+==== detail end ====
+
+
+
+==== detail end ====
+
+

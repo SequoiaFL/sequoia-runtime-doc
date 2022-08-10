@@ -1,0 +1,6 @@
+[INFO ][1711687][2022-08-10 13:18:31,296][grpc-server-4671-0,pid:11539,tid:16][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/session/registerSession
+[INFO ][1712411][2022-08-10 13:18:32,020][grpc-server-4671-1,pid:11539,tid:19][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/metadata/getOrCreateStore
+[INFO ][1712618][2022-08-10 13:18:32,227][grpc-server-4671-1,pid:11539,tid:19][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/session/registerSession
+[INFO ][1712708][2022-08-10 13:18:32,317][grpc-server-4671-1,pid:11539,tid:19][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/metadata/getOrCreateStore
+[INFO ][1712895][2022-08-10 13:18:32,504][grpc-server-4671-1,pid:11539,tid:19][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/session/registerSession
+[INFO ][1712992][2022-08-10 13:18:32,601][grpc-server-4671-1,pid:11539,tid:19][c.w.e.c.c.CommandService:107] - [COMMAND] received v1/cluster-manager/metadata/getOrCreateStore
