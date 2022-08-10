@@ -20,7 +20,7 @@ Each node should have no less than **8GB** RAM.
 3. Install required packages by the following commands.
 
    ```shell
-   sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev maven libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
+   sudo apt install build-essential autoconf automake bzip2 libbz2-dev libgmp-dev openjdk-8-jdk libaio-dev libasan5 libffi-dev libmpc-dev librocksdb-dev libtool liblz4-dev maven libmpfr-dev numactl libssl-dev python3-snappy libsnappy-dev supervisor zlib1g zlib1g-dev
    ```
 
    Here is the checklist.
@@ -33,6 +33,7 @@ Each node should have no less than **8GB** RAM.
    - [x] gcc
    - [x] gcc-c++
    - [x] gmp-devel
+   - [x] JDK 1.8
    - [x] libaio
    - [x] libasan
    - [x] libffi-dev
@@ -51,10 +52,11 @@ Each node should have no less than **8GB** RAM.
    - [x] zlib
    - [x] zlib-devel
 
-4. Install JDK 1.8 and verify by the following commands.
+4. Verify Java version by the following commands.
 
    ```shell
-   sudo apt install openjdk-8-jdk
+   sudo update-alternatives --config java
+   sudo update-alternatives --config javac
    java -version
    javac -version
    ```
@@ -139,8 +141,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
 To create a dedicated MySQL user and grant privileges, first enter MySQL monitor by `sudo mysql` and execute the following commands. Then `exit` the MySQL monitor.
 
 ```sql
-CREATE USER 'app'@'localhost' IDENTIFIED BY 'eggroll';
-GRANT CREATE, ALTER, DROP, INSERT, INDEX, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'app'@'localhost' WITH GRANT OPTION;
+CREATE USER 'eggroll-0'@'localhost' IDENTIFIED BY 'eggroll';
+GRANT CREATE, ALTER, DROP, INSERT, INDEX, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'eggroll-0'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
@@ -165,9 +167,9 @@ After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack
 
 ```shell
 cd ~/workspace
-mkdir Eggroll_deploy
-mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy/
-cd ~/workspace/Eggroll_deploy
+mkdir Eggroll_deploy_0
+mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy_0/
+cd ~/workspace/Eggroll_deploy_0
 tar -xzf eggroll.tar.gz
 ```
 
@@ -185,14 +187,17 @@ Edit config files. Change to user *app*, then change the working directory to Eg
 
    - Better make the `eggroll.resourcemanager.clustermanager.port` and `eggroll.resourcemanager.nodemanager.port` different.
 
+   - Do not use `~` to represent home directory. Instead, use absolute path.
+
 2. Edit `conf/route_table.json` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). **Below are some tips**.
 
    - Make sure the `party id`, `port` and `ip` match the configs in `eggroll.properties`.
 
-3. Edit `conf/create-eggroll-meta-tables.sql` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Then execute the following commands in MySQL monitor (**you may want to use the real `ip` and `port` that match your config**).
+3. Edit `conf/create-eggroll-meta-tables.sql` as described [here](https://github.com/WeBankFinTech/eggroll/blob/v2.x/deploy/Eggroll%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E.md#32--%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6). Then execute the following commands in MySQL monitor as user *eggroll-0* (**you may want to use the real `ip` and `port` that match your config**).
 
    ```sql
-   source /home/app/workspace/Eggroll_deploy/conf/create-eggroll-meta-tables.sql;
+   -- use the absolute path of create-eggroll-meta-tables.sql
+   source /home/app/workspace/Eggroll_deploy_0/conf/create-eggroll-meta-tables.sql;
    INSERT INTO server_node (host, port, node_type, status) values ('$cluster_ip', '$cluster_port', 'CLUSTER_MANAGER', 'HEALTHY');
    INSERT INTO server_node (host, port, node_type, status) values ('$node_ip', '$node_port', 'NODE_MANAGER', 'HEALTHY');
    SELECT * FROM server_node;
@@ -220,7 +225,8 @@ ss -ltnp
 When first-time login to the server, execute the following commands.
 
 ```shell
-export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_0
+# export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_1
 export PYTHONPATH=${EGGROLL_HOME}/python
 source ~/.venv_eggroll/bin/activate
 echo $EGGROLL_HOME
@@ -291,13 +297,20 @@ python -m unittest test_roll_pair.TestRollPairCluster
 ### Sequoia Demo
 
 ```shell
-export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy
+git clone git@github.com:SequoiaFL/sequoia-demo.git
+```
+
+```shell
+export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_0
+# export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_1
+source ~/.venv_eggroll/bin/activate
+pip3 install -r python/requirements.txt
 cd python/fate_script2/test
-python -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW
+python3.6 -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW
 ```
 
 ```python
 import sys
-sys.path.insert(0, "/home/app/workspace/Eggroll_deploy/python")
+sys.path.insert(0, "/home/app/workspace/Eggroll/python")
 sys.path.insert(1, "/home/app/workspace/sequoia-demo/python")
 ```
