@@ -167,9 +167,9 @@ After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack
 
 ```shell
 cd ~/workspace
-mkdir Eggroll_deploy_0
-mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/Eggroll_deploy_0/
-cd ~/workspace/Eggroll_deploy_0
+mkdir eggroll-0_deploy
+mv ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/eggroll-0_deploy/
+cd ~/workspace/eggroll-0_deploy
 tar -xzf eggroll.tar.gz
 ```
 
@@ -197,7 +197,7 @@ Edit config files. Change to user *app*, then change the working directory to Eg
 
    ```sql
    -- use the absolute path of create-eggroll-meta-tables.sql
-   source /home/app/workspace/Eggroll_deploy_0/conf/create-eggroll-meta-tables.sql;
+   source /home/app/workspace/eggroll-0_deploy/conf/create-eggroll-meta-tables.sql;
    INSERT INTO server_node (host, port, node_type, status) values ('$cluster_ip', '$cluster_port', 'CLUSTER_MANAGER', 'HEALTHY');
    INSERT INTO server_node (host, port, node_type, status) values ('$node_ip', '$node_port', 'NODE_MANAGER', 'HEALTHY');
    SELECT * FROM server_node;
@@ -225,8 +225,8 @@ ss -ltnp
 When first-time login to the server, execute the following commands.
 
 ```shell
-export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_0
-# export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_1
+export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
+# export EGGROLL_HOME=/home/app/workspace/eggroll-1_deploy
 export PYTHONPATH=${EGGROLL_HOME}/python
 source ~/.venv_eggroll/bin/activate
 echo $EGGROLL_HOME
@@ -301,12 +301,12 @@ git clone git@github.com:SequoiaFL/sequoia-demo.git
 ```
 
 ```shell
-export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_0
-# export EGGROLL_HOME=/home/app/workspace/Eggroll_deploy_1
+export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
+# export EGGROLL_HOME=/home/app/workspace/eggroll-1_deploy
 source ~/.venv_eggroll/bin/activate
 pip3 install -r python/requirements.txt
 cd python/fate_script2/test
-python3.6 -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW
+python3.6 -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW.test_fit_vlr_fed_rtw_to_rtw
 ```
 
 ```python
