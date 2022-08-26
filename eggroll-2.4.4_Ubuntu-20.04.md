@@ -208,7 +208,7 @@ Edit config files. Change to user *app*, then change the working directory to Eg
 Change the working directory to Eggroll's working directory. Then execute the following commands.
 
 ```shell
-bash bin/eggroll.sh all start
+bash bin/eggroll.sh all start --config conf/eggroll.properties --bootstraps com.webank.eggroll.core.resourcemanager.ClusterManagerBootstrap,com.webank.eggroll.core.resourcemanager.NodeManagerBootstrap,com.webank.eggroll.rollpair.RollPairMasterBootstrap -s testing -p 4670 --ignore-rebind
 bash bin/eggroll.sh all status
 ```
 
@@ -296,21 +296,50 @@ python -m unittest test_roll_pair.TestRollPairCluster
 
 ### Sequoia Demo
 
-```shell
-git clone git@github.com:SequoiaFL/sequoia-demo.git
-```
+1. Pull the repository
 
-```shell
-export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
-# export EGGROLL_HOME=/home/app/workspace/eggroll-1_deploy
-source ~/.venv_eggroll/bin/activate
-pip3 install -r python/requirements.txt
-cd python/fate_script2/test
-python3.6 -m unittest test_hetero_logistic_regression_rtw.TestHeteroLREncryptedRTW.test_fit_vlr_fed_rtw_to_rtw
-```
+   ```shell
+   git clone git@github.com:SequoiaFL/sequoia-demo.git
+   pip3 install -r python/requirements.txt
+   ```
 
-```python
-import sys
-sys.path.insert(0, "/home/app/workspace/Eggroll/python")
-sys.path.insert(1, "/home/app/workspace/sequoia-demo/python")
-```
+2. Add these lines to the test files.
+
+   ```python
+   import sys
+   sys.path.insert(0, "/home/app/workspace/Eggroll/python")
+   sys.path.insert(1, "/home/app/workspace/sequoia-demo/python")
+   ```
+
+3. Configure shell environment
+
+   ```shell
+   source ~/.venv_eggroll/bin/activate
+   export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
+   # export EGGROLL_HOME=/home/app/workspace/eggroll-1_deploy
+   ```
+
+4. Execute tests
+
+   ```shell
+   cd python/fate_script2/test
+   python3.6 -m unittest test_er_fed_router
+   # python3.6 -m unittest test_hetero_fast_sbt_rtw
+   python3.6 test_hetero_fast_sbt_rtw.py breast_a host 10002 10001 12345 # host
+   python3.6 test_hetero_fast_sbt_rtw.py breast_b guest 10002 10001 12345 # guest
+   python3.6 -m unittest test_hetero_fast_sbt_standalone
+   python3.6 -m unittest test_hetero_logistic_regression_rtw
+   python3.6 -m unittest test_hetero_logistic_regression_standalone
+   python3.6 -m unittest test_roll_tensor_wrap
+   python3.6 -m unittest test_rtw_convert
+   ```
+
+   Checklist:
+
+   - [ ] test_er_fed_router
+   - [ ] test_hetero_fast_sbt_rtw
+   - [x] test_hetero_fast_sbt_standalone
+   - [ ] test_hetero_logistic_regression_rtw
+   - [ ] test_hetero_logistic_regression_standalone
+   - [ ] test_roll_tensor_wrap
+   - [ ] test_rtw_convert
