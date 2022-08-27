@@ -6,9 +6,14 @@ This part introduces how to deploy [Eggroll](https://github.com/WeBankFinTech/eg
 
 ### Eggroll 2.0.1
 
-- [CentOS 7.2](./eggroll-2.0.1_CentOS-7.2.md)
+- [CentOS 7.2 (**NOT DONE**)](./eggroll-2.0.1_CentOS-7.2.md)
 - [Ubuntu 18.04](./eggroll-2.0.1_Ubuntu-18.04.md)
 - [Ubuntu 20.04](./eggroll-2.0.1_Ubuntu-20.04.md)
+
+### Eggroll 2.3.1
+
+- [Ubuntu 18.04 (**NOT DONE**)](./eggroll-2.3.1_Ubuntu-18.04.md)
+- [Ubuntu 20.04](./eggroll-2.3.1_Ubuntu-20.04.md)
 
 ### Eggroll 2.4.4
 
