@@ -170,13 +170,9 @@ After packing, move the `eggroll.tar.gz` to the deploy directory and then unpack
 
 ```shell
 cd ~/workspace
-mkdir eggroll-0_deploy
-mkdir eggroll-1_deploy
-cp ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/eggroll-0_deploy/
-cp ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/eggroll-1_deploy/
-cd ~/workspace/eggroll-0_deploy
-tar -xzf eggroll.tar.gz
-cd ~/workspace/eggroll-1_deploy
+mkdir eggroll_deploy
+cp ~/workspace/Eggroll/eggroll.tar.gz ~/workspace/eggroll_deploy/
+cd ~/workspace/eggroll_deploy
 tar -xzf eggroll.tar.gz
 ```
 
@@ -204,7 +200,7 @@ Edit config files. Change to user *app*, then change the working directory to Eg
 
    ```sql
    -- use the absolute path of create-eggroll-meta-tables.sql
-   source /home/app/workspace/eggroll-0_deploy/conf/create-eggroll-meta-tables.sql;
+   source /home/app/workspace/eggroll_deploy/conf/create-eggroll-meta-tables.sql;
    INSERT INTO server_node (host, port, node_type, status) values ('$cluster_ip', '$cluster_port', 'CLUSTER_MANAGER', 'HEALTHY');
    INSERT INTO server_node (host, port, node_type, status) values ('$node_ip', '$node_port', 'NODE_MANAGER', 'HEALTHY');
    SELECT * FROM server_node;
@@ -232,8 +228,7 @@ ss -ltnp
 When first-time login to the server, execute the following commands.
 
 ```shell
-export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
-# export EGGROLL_HOME=/home/app/workspace/eggroll-1_deploy
+export EGGROLL_HOME=/home/app/workspace/eggroll_deploy
 export PYTHONPATH=${EGGROLL_HOME}/python
 source ~/.venv_eggroll/bin/activate
 echo $EGGROLL_HOME
@@ -310,7 +305,7 @@ python -m unittest test_roll_pair.TestRollPairCluster
    pip3 install -r python/requirements.txt
    ```
 
-2. Add these lines to the test files.
+2. Add these lines to the test files (optional).
 
    ```python
    import sys
@@ -322,8 +317,8 @@ python -m unittest test_roll_pair.TestRollPairCluster
 
    ```shell
    source ~/.venv_eggroll/bin/activate
-   export EGGROLL_HOME=/home/app/workspace/eggroll-0_deploy
-   export PYTHONPATH=${EGGROLL_HOME}/python:/home/app/workspace/sequoia-demo/python
+   export EGGROLL_HOME=/data/projects/Eggroll_deploy
+   export PYTHONPATH=${EGGROLL_HOME}/python:/data/projects/sequoia-demo/python
    echo $EGGROLL_HOME
    echo $PYTHONPATH
    ```
@@ -332,15 +327,14 @@ python -m unittest test_roll_pair.TestRollPairCluster
 
    ```shell
    cd python/fate_script2/test
-   python3.6 -m unittest test_er_fed_router
-   # python3.6 -m unittest test_hetero_fast_sbt_rtw
-   python3.6 test_hetero_fast_sbt_rtw.py breast_a host 10002 10001 12345 # host
-   python3.6 test_hetero_fast_sbt_rtw.py breast_b guest 10002 10001 12345 # guest
-   python3.6 -m unittest test_hetero_fast_sbt_standalone
-   python3.6 -m unittest test_hetero_logistic_regression_rtw
-   python3.6 -m unittest test_hetero_logistic_regression_standalone
-   python3.6 -m unittest test_roll_tensor_wrap
-   python3.6 -m unittest test_rtw_convert
+   python -m unittest test_er_fed_router
+   python test_hetero_fast_sbt_rtw.py breast_a host 10002 10001 12345 # host
+   python test_hetero_fast_sbt_rtw.py breast_b guest 10002 10001 12345 # guest
+   python -m unittest test_hetero_fast_sbt_standalone
+   python -m unittest test_hetero_logistic_regression_rtw
+   python -m unittest test_hetero_logistic_regression_standalone
+   python -m unittest test_roll_tensor_wrap
+   python -m unittest test_rtw_convert
    ```
 
    Checklist:
