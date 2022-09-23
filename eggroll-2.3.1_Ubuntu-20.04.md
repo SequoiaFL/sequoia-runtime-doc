@@ -330,10 +330,10 @@ python -m unittest test_roll_pair.TestRollPairCluster
    # test sbt
    python test_hetero_fast_sbt_rtw.py breast_a host 10001 10002 12345 # host
    python test_hetero_fast_sbt_rtw.py breast_b guest 10001 10002 12345 # guest
-   python -m unittest test_hetero_fast_sbt_standalone
    # test lr
-   python -m unittest test_hetero_logistic_regression_rtw
-   python -m unittest test_hetero_logistic_regression_standalone
+   python test_hetero_logistic_regression_rtw_rewrite.py breast_b_mini guest 10001 10002 10002 12345 # guest
+   python test_hetero_logistic_regression_rtw_rewrite.py breast_a_mini host 10001 10002 10002 12345 # host
+   python test_hetero_logistic_regression_rtw_rewrite.py breast_a_mini arbiter 10001 10002 10002 12345 # arbiter
    ```
 
    Checklist:
