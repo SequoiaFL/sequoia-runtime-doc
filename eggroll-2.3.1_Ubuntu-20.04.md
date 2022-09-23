@@ -327,14 +327,13 @@ python -m unittest test_roll_pair.TestRollPairCluster
 4. Execute tests
 
    ```shell
-   python -m unittest test_er_fed_router
+   # test sbt
    python test_hetero_fast_sbt_rtw.py breast_a host 10001 10002 12345 # host
    python test_hetero_fast_sbt_rtw.py breast_b guest 10001 10002 12345 # guest
    python -m unittest test_hetero_fast_sbt_standalone
+   # test lr
    python -m unittest test_hetero_logistic_regression_rtw
    python -m unittest test_hetero_logistic_regression_standalone
-   python -m unittest test_roll_tensor_wrap
-   python -m unittest test_rtw_convert
    ```
 
    Checklist:
